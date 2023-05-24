@@ -208,9 +208,9 @@ namespace Northwind
 				Console.WriteLine(product.ProductName + " " +product.SupplierId);
 			}
 			*/
-			#endregion Create a report that shows the shipping postal code, order id, and order date for all orders with a ship postal code beginning with "02389".
+			#endregion 
 
-			#region Create a report that shows the shipping postal code, order id, and order date for all orders with a ship postal code beginning with "02389".
+			#region 20- Create a report that shows the shipping postal code, order id, and order date for all orders with a ship postal code beginning with "02389".
 			/*
 			var result = db.Orders.Where(o => o.ShipPostalCode.StartsWith("02389")).Select(o => new { o.ShipPostalCode, o.OrderId, o.OrderDate }).ToList();
 			foreach (var order in result) 
