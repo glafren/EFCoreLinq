@@ -1,8 +1,11 @@
-﻿using Northwind.Data.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Northwind.Data.Models;
 using Northwind.Models;
+using System;
 using System.Net.WebSockets;
 using System.Numerics;
 using System.Runtime.Versioning;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Northwind
 {
@@ -208,7 +211,7 @@ namespace Northwind
 				Console.WriteLine(product.ProductName + " " +product.SupplierId);
 			}
 			*/
-			#endregion 
+			#endregion
 
 			#region 20- Create a report that shows the shipping postal code, order id, and order date for all orders with a ship postal code beginning with "02389".
 			/*
@@ -219,6 +222,48 @@ namespace Northwind
             }
 			*/
 			#endregion
-		}
+
+			#region 21- Create a report that shows the contact name and title and the company name for all customers whose contact title does not contain the word "Sales".
+			/*
+			var result = db.Customers.Where(c => !c.ContactTitle.Contains("Sales")).Select(c => new { c.ContactName, c.CompanyName,c.ContactTitle }).ToList();
+			foreach ( var c in result) 
+			{
+				Console.WriteLine(c.ContactName + " " + c.CompanyName + "" + c.ContactTitle);
+            }
+			*/
+			#endregion
+
+			#region 22- Create a report that shows the first and last names and cities of employees from cities other than Seattle in the State of Washington.
+			/*
+			var result = db.Employees.Where(e => e.Region == "WA" && e.City != "Seattle").Select(e => new { e.FirstName, e.LastName, e.City }).ToList();
+			foreach ( var e in result ) 
+			{
+				Console.WriteLine(e.FirstName + " " + e.LastName + " " + e.City);
+            }
+			*/
+			#endregion
+
+			#region 23- Create a report that shows the company name, contact title, City and country of all customers in Mexico or in any City in Spain except Madrid.
+			/*
+			var result = db.Customers.Where(c => (c.Country == "Mexico" || c.Country == "Spain") && c.City != "Madrid").Select(c=> new{c.CompanyName,c.ContactTitle,c.City,c.Country}).ToList();
+
+			foreach ( var c in result ) 
+			{
+				Console.WriteLine(c.CompanyName + " " + c.ContactTitle + " " + c.City + " " + c.Country);
+            }
+			*/
+			#endregion
+
+			#region 24- Write a SELECT statement that outputs the following.
+			/*
+			var result = db.Employees.Select(c => new { ContactInfo = string.Concat(c.FirstName , " " , c.LastName , " can be reached at x" , c.Extension, " .")}).ToList();
+            foreach ( var item in result ) 
+			{
+                Console.WriteLine(item.ContactInfo);
+            }
+			*/
+            #endregion
+
+        }
 	}
 }
