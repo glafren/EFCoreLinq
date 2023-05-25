@@ -90,8 +90,7 @@ namespace Northwind
 
 			#region 8- Create a report showing the order date, shipped date, customer id, and freight of all orders placed on May 19, 1997.
 			/*
-			var date = new DateTime(1997, 05, 19);
-			var result = db.Orders.Select(o => new { o.OrderDate, o.ShippedDate, o.CustomerId, o.Freight }).Where(o => o.OrderDate == date).ToList();
+			var result = db.Orders.Where(o => o.OrderDate == new DateTime(1997, 5, 19)).Select(o => new { o.OrderDate, o.ShippedDate, o.CustomerId, o.Freight }).ToList();
 
 			foreach (var order in result) 
 			{
@@ -102,7 +101,7 @@ namespace Northwind
 
 			#region 9- Create a report showing the first name, last name, and country of all employees not in the United States.
 			/*
-			var result = db.Employees.Select(e => new { e.FirstName, e.LastName, e.Country }).Where(e => e.Country != "USA").ToList();
+			var result = db.Employees.Where(e => e.Country != "USA").Select(e => new { e.FirstName, e.LastName, e.Country }).ToList();
 			
 			foreach (var employee in result)
 			{
@@ -111,9 +110,9 @@ namespace Northwind
 			*/
 			#endregion
 
-			#region 10- Create a report that shows the employee id, order id, customer id, required date, and shipped date of all orders that were shi ed later than the were re uired.
+			#region 10- Create a report that shows the employee id, order id, customer id, required date, and shipped date of all orders that were shipped later than the were required.
 			/*
-			var result = db.Orders.Select(o => new { o.EmployeeId, o.OrderId, o.CustomerId, o.RequiredDate, o.ShippedDate }).Where(o => o.ShippedDate > o.RequiredDate).ToList();
+			var result = db.Orders.Where(o => o.ShippedDate > o.RequiredDate).Select(o => new { o.EmployeeId, o.OrderId, o.CustomerId, o.RequiredDate, o.ShippedDate }).ToList();
 			foreach(var order in result)
 			{
 				Console.WriteLine(order.EmployeeId + " " + order.OrderId + " " + order.CustomerId + " " + order.RequiredDate + " " + order.ShippedDate);
@@ -123,7 +122,7 @@ namespace Northwind
 
 			#region 11- Create a report that shows the City, company name, and contact name of all customers who are in cities that be 'n with "A” or "B.”
 			/*
-			var result = db.Customers.Select(c => new { c.City, c.CompanyName, c.ContactName }).Where(c => c.City.StartsWith ("A") || c.City.StartsWith("B")).ToList();
+			var result = db.Customers.Where(c => c.City.StartsWith("A") || c.City.StartsWith("B")).Select(c => new { c.City, c.CompanyName, c.ContactName }).ToList();
 			foreach(var customer in result)
 			{
 				Console.WriteLine(customer.City + " " + customer.CompanyName + " " + customer.ContactName);	
@@ -143,7 +142,7 @@ namespace Northwind
 
 			#region 13- Create a report that shows the product name, units in Stock, units on order, and reorder level of all products that are up for reorder
 			/*
-			var result = db.Products.Select(p => new { p.ProductName, p.UnitsInStock, p.UnitsOnOrder, p.ReorderLevel }).Where(p => p.ReorderLevel > 1).ToList();
+			var result = db.Products.Where(p => p.ReorderLevel >= p.UnitsInStock).Select(p => new { p.ProductName, p.UnitsInStock, p.UnitsOnOrder, p.ReorderLevel }).ToList();
 			foreach ( var product in result )
 			{
 				Console.WriteLine(product.ProductName+" "+product.UnitsInStock+" "+product.UnitsOnOrder+" "+product.ReorderLevel);
@@ -153,7 +152,7 @@ namespace Northwind
 
 			#region 14- Create a report that shows the company name, contact name and fax number of all customers that have a fax number.
 			/*
-			var result = db.Customers.Select(c => new { c.CompanyName, c.ContactName, c.Fax }).Where(c => c.Fax != null).ToList();
+			var result = db.Customers.Where(c => c.Fax != null).Select(c => new { c.CompanyName, c.ContactName, c.Fax }).ToList();
 			foreach ( var c in result ) 
 			{
                 Console.WriteLine(c.CompanyName+" "+c.ContactName+" "+c.Fax);
@@ -163,7 +162,7 @@ namespace Northwind
 
 			#region 15- Create a report that shows the fırst and last name of all employees who do not report to anybody
 			/*
-			var result = db.Employees.Select(e => new { e.FirstName, e.LastName, e.ReportsTo }).Where(e => e.ReportsTo == null).ToList();
+			var result = db.Employees.Where(e => e.ReportsTo == null).Select(e => new { e.FirstName, e.LastName, e.ReportsTo }).ToList();
 			foreach ( var e in result ) 
 			{
                 Console.WriteLine(e.FirstName +" "+ e.LastName);
@@ -173,7 +172,7 @@ namespace Northwind
 
 			#region 16- Create a report that shows the company name, contact name and fax number of all customers that have a fax number. Sort by company name.
 			/*
-			var result = db.Customers.Select(c => new { c.CompanyName, c.ContactName, c.Fax }).Where(c => c.Fax != null).OrderBy(c=> c.CompanyName).ToList();
+			var result = db.Customers.Where(c => c.Fax != null).Select(c => new { c.CompanyName, c.ContactName, c.Fax }).OrderBy(c=> c.CompanyName).ToList();
 			foreach ( var c in result ) 
 			{
                 Console.WriteLine(c.CompanyName+" "+c.ContactName+" "+c.Fax);
@@ -183,7 +182,7 @@ namespace Northwind
 
 			#region 17- Create a report that shows the City, company name, and contact name of all customers who are in cities that be 'n with "A” or "B.”.Sort by contact name in descending order
 			/*
-			var result = db.Customers.Select(c => new { c.City, c.CompanyName, c.ContactName }).Where(c => c.City.StartsWith("A") || c.City.StartsWith("B")).OrderByDescending(c=> c.ContactName).ToList();
+			var result = db.Customers.Where(c => c.City.StartsWith("A") || c.City.StartsWith("B")).Select(c => new { c.City, c.CompanyName, c.ContactName }).OrderByDescending(c=> c.ContactName).ToList();
 			foreach (var customer in result)
 			{
 				Console.WriteLine(customer.City + " " + customer.CompanyName + " " + customer.ContactName);
@@ -194,7 +193,7 @@ namespace Northwind
 			#region 18- Create a report that shows the first and last names and birth date of all employees born in the 1950s.
 			/*
 			var date = new DateTime(1950, 01, 01);
-			var result = db.Employees.Select(e => new { e.FirstName, e.LastName, e.BirthDate }).Where(e => e.BirthDate >= date).ToList();
+			var result = db.Employees.Where(e => e.BirthDate.Value.Year >= 1950 && e.BirthDate.Value.Year <= 1960).Select(e => new { e.FirstName, e.LastName, e.BirthDate }).ToList();
 
 			foreach ( var e in result ) 
 			{
@@ -204,14 +203,14 @@ namespace Northwind
 			#endregion
 
 			#region 19- Create a report that shows the product name and supplier id for all products supplied by Exotic Liquids, Grandma Kelly's Homestead, and Tokyo Traders.
-			/*
+			
 			var suppliers = db.Suppliers.Where(s => s.CompanyName == "Exotic Liquids" || s.CompanyName == "Grandma Kelly's Homestead" || s.CompanyName == "Tokyo Traders").Select(s=>s.SupplierId).ToList();
 			var result = db.Products.Where(s => suppliers.Contains((int)s.SupplierId)).Select(s=> new{s.ProductName,s.SupplierId}).ToList();
 			foreach (var product in result)
 			{
 				Console.WriteLine(product.ProductName + " " +product.SupplierId);
 			}
-			*/
+			
 			#endregion
 
 			#region 20- Create a report that shows the shipping postal code, order id, and order date for all orders with a ship postal code beginning with "02389".
@@ -266,14 +265,14 @@ namespace Northwind
 			#endregion
 
 			#region 25- Create a report that shows the units in stock, unit price, the total price value of all units in stock, the total price value of all unitsin Stock rounded down, and the total price value of all units in Stock rounded up. Sort the total price value descending.
-			
+			/*
 			var result = db.Products.Select(p => new { p.UnitsInStock, p.UnitPrice, TotalPrice = (p.UnitsInStock * p.UnitPrice), TotalPriceDown = Math.Floor((decimal)p.UnitsInStock * (decimal)p.UnitPrice)}).ToList();
 
 			foreach (var item in result)
 			{
-                Console.WriteLine(item.UnitPrice + " " + item.UnitPrice + " " + item.TotalPrice + " | " + item.TotalPriceDown );
+                Console.WriteLine(item.UnitPrice + " " + item.UnitsInStock + " " + item.TotalPrice + " | " + item.TotalPriceDown );
             }
-			
+			*/
 			#endregion
 		}
 	}
