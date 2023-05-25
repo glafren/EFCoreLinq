@@ -2,6 +2,7 @@
 using Northwind.Data.Models;
 using Northwind.Models;
 using System;
+using System.ComponentModel;
 using System.Net.WebSockets;
 using System.Numerics;
 using System.Runtime.Versioning;
@@ -262,8 +263,17 @@ namespace Northwind
                 Console.WriteLine(item.ContactInfo);
             }
 			*/
-            #endregion
+			#endregion
 
-        }
+			#region 25- Create a report that shows the units in stock, unit price, the total price value of all units in stock, the total price value of all unitsin Stock rounded down, and the total price value of all units in Stock rounded up. Sort the total price value descending.
+
+			var result = db.Products.Select(p => new { p.UnitsInStock, p.UnitPrice, TotalPrice = (p.UnitsInStock * p.UnitPrice), TotalPriceDown = Math.Floor((decimal)p.UnitsInStock * (decimal)p.UnitPrice)}).ToList();
+
+			foreach (var item in result)
+			{
+                Console.WriteLine(item.UnitPrice + " " + item.UnitPrice + " " + item.TotalPrice + " | " + item.TotalPriceDown );
+            }
+			#endregion
+		}
 	}
 }
