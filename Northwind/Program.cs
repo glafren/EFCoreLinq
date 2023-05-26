@@ -203,14 +203,30 @@ namespace Northwind
 			#endregion
 
 			#region 19- Create a report that shows the product name and supplier id for all products supplied by Exotic Liquids, Grandma Kelly's Homestead, and Tokyo Traders.
+			/*
 			
+			List<string> list = new List<string>();
+			list.Add("Tokyo Traders");
+			list.Add("Exotic Liquids");
+			list.Add("Grandma Kelly's Homestead");
+
+			var result = db.Products.Where(p =>
+			db.Suppliers.Where(s => list.Contains(s.CompanyName)).
+			Select(s => s.SupplierId).
+			Contains((int)p.SupplierId)).Select(p => new Product
+			{
+				ProductName = p.ProductName,
+				SupplierId = p.SupplierId,
+
+			});*/
+			/*
 			var suppliers = db.Suppliers.Where(s => s.CompanyName == "Exotic Liquids" || s.CompanyName == "Grandma Kelly's Homestead" || s.CompanyName == "Tokyo Traders").Select(s=>s.SupplierId).ToList();
 			var result = db.Products.Where(s => suppliers.Contains((int)s.SupplierId)).Select(s=> new{s.ProductName,s.SupplierId}).ToList();
 			foreach (var product in result)
 			{
 				Console.WriteLine(product.ProductName + " " +product.SupplierId);
 			}
-			
+			*/
 			#endregion
 
 			#region 20- Create a report that shows the shipping postal code, order id, and order date for all orders with a ship postal code beginning with "02389".
@@ -266,13 +282,80 @@ namespace Northwind
 
 			#region 25- Create a report that shows the units in stock, unit price, the total price value of all units in stock, the total price value of all unitsin Stock rounded down, and the total price value of all units in Stock rounded up. Sort the total price value descending.
 			/*
-			var result = db.Products.Select(p => new { p.UnitsInStock, p.UnitPrice, TotalPrice = (p.UnitsInStock * p.UnitPrice), TotalPriceDown = Math.Floor((decimal)p.UnitsInStock * (decimal)p.UnitPrice)}).ToList();
-
+			var result = db.Products.Select(p => new
+			{
+				p.UnitsInStock,
+				p.UnitPrice,
+				TotalPrice = (p.UnitPrice * p.UnitsInStock),
+				TotalPriceDown = Math.Floor((decimal)p.UnitPrice * (short)p.UnitsInStock),
+				TotalPriceUp = Math.Ceiling((decimal)p.UnitPrice * (short)p.UnitsInStock)
+			}).OrderByDescending(p=>p.TotalPrice).ToList();
 			foreach (var item in result)
 			{
-                Console.WriteLine(item.UnitPrice + " " + item.UnitsInStock + " " + item.TotalPrice + " | " + item.TotalPriceDown );
+                Console.WriteLine(item.UnitPrice + " " + item.UnitsInStock + " " + item.TotalPrice + " | " + item.TotalPriceDown + " | " + item.TotalPriceUp );
             }
 			*/
+			#endregion
+
+			#region 26- SQL SERVER AND MYSQL USERS ONLY: ın an earlier demo, you saw a report that returned the age of each employee when hired. That report was not entirely accurate as it didn't account for the month and day the employee was born.Fix that report, showing both the original(inaccurate) hire age and the actual hire age.The result Will look like this.
+			/*
+			var result = db.Employees.Select(e=> new { HireAgeAccurate = ((e.HireDate - e.BirthDate).Value.Days)/365.0,
+			HireAgeInaccurate = e.HireDate.Value.Year - e.BirthDate.Value.Year } ).ToList();
+
+			foreach ( var e in result ) 
+			{
+                Console.WriteLine((e.HireAgeAccurate)+" "+e.HireAgeInaccurate);
+            }
+			*/
+			#endregion
+
+			#region 27-Create a report that shows the fırst and last names and birth month (as a string) for each employee born in the current month.
+			/*
+			var result = db.Employees.Where(e => e.BirthDate.Value.Month == DateTime.Now.Month).
+			Select(e => new{e.FirstName,e.LastName, MounthName= e.BirthDate.Value.ToString("MMMM")}).ToList();
+
+			foreach ( var e in result ) 
+			{
+                Console.WriteLine(e.FirstName + " " +e.LastName+ " " + e.MounthName);
+            }
+			*/
+			#endregion
+
+			#region 28- Create a report that shows the contact title in all Iowercase letters of each customer contact.
+			/*
+			var result = db.Customers.Select(c => c.ContactName.ToLower()).ToList();
+
+			foreach ( var customer in result ) 
+			{
+                Console.WriteLine(customer);
+            }
+			*/
+			#endregion
+
+			#region 30- Create a report that shows all products by name that are in the Seafood category
+			/*
+			var result = db.Products.Include(c => c.Category).Where(c => c.Category.CategoryName == "Seafood");
+
+			foreach (var product in result)
+			{
+				Console.WriteLine(product.ProductName + " "+product.CategoryId + " " + product.Category.CategoryName);
+			}
+			*/
+			#endregion
+
+			#region 31- Create a report that shows all companies by name that sell products in CategoryID 8.
+			/*
+			var result = db.Products.Where(p => p.CategoryId == 8).ToList();
+			foreach (var product in result) 
+			{
+				Console.WriteLine(product.CategoryId+ " " +product.ProductName);
+			}
+			*/
+			#endregion
+
+			#region 32- Create a report that shows all companies by name that sell products in the Seafood category.
+
+
 			#endregion
 		}
 	}
