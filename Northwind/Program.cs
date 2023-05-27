@@ -354,9 +354,26 @@ namespace Northwind
 			#endregion
 
 			#region 32- Create a report that shows all companies by name that sell products in the Seafood category.
+			/*
+			var result = db.Products.Include(p => p.Category).Where(c => c.Category.CategoryName == "Seafood").Select(c => c.ProductName).ToList();
+			foreach ( var item in result ) 
+			{
+				Console.WriteLine(item);
+			}
+			*/
+			#endregion
 
+			#region 33- Create a report that shows the order ids and the associated employee names for orders that shipped after the required date.It should return the following.There should be 37 rows returned.
+
+			var result = db.Orders.Include(o => o.Employee).Where(o => o.ShippedDate > o.RequiredDate).Select(o => new { o.EmployeeId, o.Employee.FirstName }).ToList();
+
+			foreach ( var o in result ) 
+			{
+                Console.WriteLine(o.EmployeeId + " " + o.FirstName);
+            }
 
 			#endregion
+
 		}
 	}
 }
