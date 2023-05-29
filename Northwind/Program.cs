@@ -3,6 +3,7 @@ using Northwind.Data.Models;
 using Northwind.Models;
 using System;
 using System.ComponentModel;
+using System.Diagnostics.Metrics;
 using System.Net.WebSockets;
 using System.Numerics;
 using System.Runtime.Versioning;
@@ -46,7 +47,6 @@ namespace Northwind
 			}
 			*/
 			#endregion
-
 			#region 4- Çalışanların ad ve soyadlarını ve işe alım tarihlerini en yeniden en eskiye doğru sıralanmış olarak gösteren bir sorgu oluşturun.
 			/*
 			var result = db.Employees.Select(e => new { e.FirstName, e.LastName, e.HireDate}).OrderByDescending(e => e.HireDate).ToList();
@@ -56,7 +56,6 @@ namespace Northwind
 			}
 			*/
 			#endregion
-
 			#region 5- Northwind'in Navlun'a göre en pahalıdan en ucuza doğru sıralanmış siparişlerini gösteren bir rapor oluşturun. Show OrderID, OrderDate, ShippedDate, CustomerID, and Freight.
 			/*
 			var result = db.Orders.Select(o => new { o.OrderId, o.OrderDate, o.ShippedDate, o.CustomerId, o.Freight}).OrderByDescending(o=> o.Freight).ToList();
@@ -66,7 +65,6 @@ namespace Northwind
 			}
 			*/
 			#endregion
-
 			#region 6- Select CompanyName, Fax, Phone, HomePage and Country from the Suppliers table sorted by Count in descendin order and then b Com an Name in ascendin order.
 			/*
 			var result = db.Suppliers.Select(s => new { s.CompanyName, s.Fax, s.Phone, s.HomePage, s.Country}).OrderByDescending(s => s.Country).OrderBy(s=>s.CompanyName).ToList();
@@ -77,7 +75,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 7- Create a report showing all the company names and contact names of Northwind's customers in Buenos Aires.
 			/*
 			var result = db.Customers.Select(c => new { c.CompanyName, c.ContactName,c.City }).Where(s => s.City == "Buenos Aires").ToList(); 
@@ -109,7 +106,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 10- Create a report that shows the employee id, order id, customer id, required date, and shipped date of all orders that were shipped later than the were required.
 			/*
 			var result = db.Orders.Where(o => o.ShippedDate > o.RequiredDate).Select(o => new { o.EmployeeId, o.OrderId, o.CustomerId, o.RequiredDate, o.ShippedDate }).ToList();
@@ -119,7 +115,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 11- Create a report that shows the City, company name, and contact name of all customers who are in cities that be 'n with "A” or "B.”
 			/*
 			var result = db.Customers.Where(c => c.City.StartsWith("A") || c.City.StartsWith("B")).Select(c => new { c.City, c.CompanyName, c.ContactName }).ToList();
@@ -139,7 +134,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 13- Create a report that shows the product name, units in Stock, units on order, and reorder level of all products that are up for reorder
 			/*
 			var result = db.Products.Where(p => p.ReorderLevel >= p.UnitsInStock).Select(p => new { p.ProductName, p.UnitsInStock, p.UnitsOnOrder, p.ReorderLevel }).ToList();
@@ -169,7 +163,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 16- Create a report that shows the company name, contact name and fax number of all customers that have a fax number. Sort by company name.
 			/*
 			var result = db.Customers.Where(c => c.Fax != null).Select(c => new { c.CompanyName, c.ContactName, c.Fax }).OrderBy(c=> c.CompanyName).ToList();
@@ -179,7 +172,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 17- Create a report that shows the City, company name, and contact name of all customers who are in cities that be 'n with "A” or "B.”.Sort by contact name in descending order
 			/*
 			var result = db.Customers.Where(c => c.City.StartsWith("A") || c.City.StartsWith("B")).Select(c => new { c.City, c.CompanyName, c.ContactName }).OrderByDescending(c=> c.ContactName).ToList();
@@ -189,7 +181,6 @@ namespace Northwind
 			}
 			*/
 			#endregion
-
 			#region 18- Create a report that shows the first and last names and birth date of all employees born in the 1950s.
 			/*
 			var date = new DateTime(1950, 01, 01);
@@ -201,7 +192,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 19- Create a report that shows the product name and supplier id for all products supplied by Exotic Liquids, Grandma Kelly's Homestead, and Tokyo Traders.
 			/*
 			
@@ -228,7 +218,6 @@ namespace Northwind
 			}
 			*/
 			#endregion
-
 			#region 20- Create a report that shows the shipping postal code, order id, and order date for all orders with a ship postal code beginning with "02389".
 			/*
 			var result = db.Orders.Where(o => o.ShipPostalCode.StartsWith("02389")).Select(o => new { o.ShipPostalCode, o.OrderId, o.OrderDate }).ToList();
@@ -238,7 +227,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 21- Create a report that shows the contact name and title and the company name for all customers whose contact title does not contain the word "Sales".
 			/*
 			var result = db.Customers.Where(c => !c.ContactTitle.Contains("Sales")).Select(c => new { c.ContactName, c.CompanyName,c.ContactTitle }).ToList();
@@ -248,7 +236,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 22- Create a report that shows the first and last names and cities of employees from cities other than Seattle in the State of Washington.
 			/*
 			var result = db.Employees.Where(e => e.Region == "WA" && e.City != "Seattle").Select(e => new { e.FirstName, e.LastName, e.City }).ToList();
@@ -258,7 +245,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 23- Create a report that shows the company name, contact title, City and country of all customers in Mexico or in any City in Spain except Madrid.
 			/*
 			var result = db.Customers.Where(c => (c.Country == "Mexico" || c.Country == "Spain") && c.City != "Madrid").Select(c=> new{c.CompanyName,c.ContactTitle,c.City,c.Country}).ToList();
@@ -269,7 +255,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 24- Write a SELECT statement that outputs the following.
 			/*
 			var result = db.Employees.Select(c => new { ContactInfo = string.Concat(c.FirstName , " " , c.LastName , " can be reached at x" , c.Extension, " .")}).ToList();
@@ -279,7 +264,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 25- Create a report that shows the units in stock, unit price, the total price value of all units in stock, the total price value of all unitsin Stock rounded down, and the total price value of all units in Stock rounded up. Sort the total price value descending.
 			/*
 			var result = db.Products.Select(p => new
@@ -296,7 +280,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 26- SQL SERVER AND MYSQL USERS ONLY: ın an earlier demo, you saw a report that returned the age of each employee when hired. That report was not entirely accurate as it didn't account for the month and day the employee was born.Fix that report, showing both the original(inaccurate) hire age and the actual hire age.The result Will look like this.
 			/*
 			var result = db.Employees.Select(e=> new { HireAgeAccurate = ((e.HireDate - e.BirthDate).Value.Days)/365.0,
@@ -308,7 +291,6 @@ namespace Northwind
             }
 			*/
 			#endregion
-
 			#region 27-Create a report that shows the fırst and last names and birth month (as a string) for each employee born in the current month.
 			/*
 			var result = db.Employees.Where(e => e.BirthDate.Value.Month == DateTime.Now.Month).
@@ -362,18 +344,98 @@ namespace Northwind
 			}
 			*/
 			#endregion
-
 			#region 33- Create a report that shows the order ids and the associated employee names for orders that shipped after the required date.It should return the following.There should be 37 rows returned.
 
-			var result = db.Orders.Include(o => o.Employee).Where(o => o.ShippedDate > o.RequiredDate).Select(o => new { o.EmployeeId, o.Employee.FirstName }).ToList();
+			/*
+			select FirstName, Orders.OrderID from Employees
+			join Orders on Employees.EmployeeID = Orders.EmployeeID
+			where Orders.ShippedDate > Orders.RequiredDate
+			*/
 
-			foreach ( var o in result ) 
+			//var result = db.Orders.Include(o => o.Employee).Where(o => o.ShippedDate > o.RequiredDate).Select(o => new { o.EmployeeId, o.Employee.FirstName }).ToList();
+			/*
+			var result = db.Orders.Where(o => o.ShippedDate > o.RequiredDate).Join(db.Employees, o => o.EmployeeId, e => e.EmployeeId, (order, employee) => new
 			{
-                Console.WriteLine(o.EmployeeId + " " + o.FirstName);
-            }
+				order.OrderId,
+				employee.FirstName,
+				employee.LastName
+			});
 
+
+
+			//Console.WriteLine(result.Count);
+			Console.WriteLine("Toplam Sayı:" + result.Count(a => true)); //IQueryable da kullanılabilir. 
+            foreach ( var o in result ) 
+			{
+                Console.WriteLine(o.OrderId + " " + o.FirstName + " " + o.LastName);
+            }
+			*/
 			#endregion
 
+			#region 34- Create a report that shows the total quantity of products (from the Order_DetaiIs table) ordered. Only Show records for products for which the quantity ordered is fewer than 200.The report should return the following 5 rows.
+
+			/*
+				SELECT p.ProductName, SUM(o.Quantity) as TotalUnits
+				FROM [Order Details] o
+				JOIN Products p ON o.ProductID = p.ProductID
+				GROUP BY p.ProductName
+				having SUM(o.Quantity) < 200 
+			 */
+			/*
+		   var result = db.OrderDetails.Join(db.Products, od => od.ProductId, p => p.ProductId, (orderdetail, product) => new {
+			   orderdetail.Quantity,
+			   product.ProductName
+		   })
+		   .GroupBy(g => g.ProductName)
+		   .Where(g => g.Sum(x => x.Quantity) < 200)
+		   .Select(s => new {
+			   ProductName = s.Key,
+			   TotalUnits = s.Sum(x => x.Quantity)
+		   });
+
+		   foreach (var item in result)
+		   {
+			   Console.WriteLine(item.ProductName + " " + item.TotalUnits);
+		   }
+		   */
+			#endregion
+
+			#region 35- Create a report that shows the total number of orders by Customer since December 31, 1996. The report should only return rows for which the NumOrders is greater than 15.The report should return the following 5 rows.
+
+			/*
+			select c.CompanyName, count(o.OrderID) as NumOrders from Orders o
+			join Customers c on o.CustomerID = c.CustomerID
+			where o.OrderDate > '12/31/1996'
+			group by c.CompanyName
+			having count(o.OrderID) > 15
+			 */
+
+			/*
+		   var result = db.Orders.Include(o => o.Customer)
+		   .Where(g=> g.OrderDate > new DateTime(1996,12,31))
+		   .GroupBy(g => g.Customer.CompanyName)
+		   .Where(g => g.Count() > 15)
+		   .Select(g => new
+		   {
+			   companyname = g.Key,
+			   numorders = g.Count(g => true)
+		   });
+		   */
+
+			var result = db.Customers.GroupJoin(db.Orders.Where(x => x.OrderDate > new DateTime(1996, 12, 31)), c => c.CustomerId, o => o.CustomerId, (customer, gruplanmisOrderTablosu) => new
+			{
+				customer.CompanyName,
+				OrderCount = gruplanmisOrderTablosu.Count()
+			}).Where(res => res.OrderCount > 15);
+
+
+			foreach (var item in result) 
+			{
+                Console.WriteLine(item.OrderCount + " " + item.CompanyName);
+            }
+
+
+			#endregion
 		}
 	}
 }
