@@ -421,20 +421,43 @@ namespace Northwind
 			   numorders = g.Count(g => true)
 		   });
 		   */
+			/*
+			 var result = db.Customers.GroupJoin(db.Orders.Where(x => x.OrderDate > new DateTime(1996, 12, 31)), c => c.CustomerId, o => o.CustomerId, (customer, gruplanmisOrderTablosu) => new
+			 {
+				 customer.CompanyName,
+				 OrderCount = gruplanmisOrderTablosu.Count()
+			 }).Where(res => res.OrderCount > 15);
 
-			var result = db.Customers.GroupJoin(db.Orders.Where(x => x.OrderDate > new DateTime(1996, 12, 31)), c => c.CustomerId, o => o.CustomerId, (customer, gruplanmisOrderTablosu) => new
+
+			 foreach (var item in result) 
+			 {
+				 Console.WriteLine(item.OrderCount + " " + item.CompanyName);
+			 }
+			 */
+			#endregion
+
+			#region 36- Create a report that shows the company name, order id, and total price of ali products of which Northwind has sold more than $10,000 worth.There is no need for a GROUP BY clause in this report.
+
+			/*
+				select c.CompanyName, o.OrderID, ((od.Quantity * od.UnitPrice)*(1-od.Discount)) as TotalPrice  from Customers c 
+				join Orders o on o.CustomerID = c.CustomerID 
+				join [Order Details] od on od.OrderID = o.OrderID
+				where ((od.Quantity * od.UnitPrice)*(1-od.Discount)) >= 10000
+			 */
+
+			var result = db.OrderDetails.Include(c => c.Order).ThenInclude(o => o.Customer)
+			.Where(c => (c.Quantity * c.UnitPrice) * (1 - (decimal)c.Discount) >= 10000)
+			.Select(res => new
 			{
-				customer.CompanyName,
-				OrderCount = gruplanmisOrderTablosu.Count()
-			}).Where(res => res.OrderCount > 15);
-
-
+				res.Order.Customer.CompanyName,
+				res.OrderId,
+				TotalPrice = (res.Quantity * res.UnitPrice) * (1 - (decimal)res.Discount)
+			});
+			
 			foreach (var item in result) 
 			{
-                Console.WriteLine(item.OrderCount + " " + item.CompanyName);
+                Console.WriteLine(item.CompanyName + " " + item.OrderId + " " + item.TotalPrice);
             }
-
-
 			#endregion
 		}
 	}
